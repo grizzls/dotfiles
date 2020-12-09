@@ -35,6 +35,9 @@ if test ! $(which brew); then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+brew doctor
+brew cask doctor
+
 echo "installing brew stuff"
 # git for Git*
 # openssl for most everything
