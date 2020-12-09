@@ -94,6 +94,15 @@ brew cleanup
 echo "installing oh my zsh"
 curl -L http://install.ohmyz.sh | sh
 
+# Install PowerLevel10k Theme
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+echo "Download the following fonts:"
+echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf"
+echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf"
+echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf"
+echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf"
+read -p "Press [Enter] key after this..."
+
 # Install Powerline fonts
 echo "Installing Powerline fonts..."
 git clone https://github.com/powerline/fonts.git
@@ -121,6 +130,7 @@ read -p "Press [Enter] key after this..."
 echo "cloning dotfiles"
 git clone git@github.com:grizzls/dotfiles.git "${HOME}/code/dotfiles"
 ln -s "${HOME}/dotfiles/.p10k.zsh" "${HOME}/.p10k.zsh"
+cp "${HOME}/.zshrc" "${HOME}/.zshrc-backup"
 ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
 
 #adding system files to global gitignore
