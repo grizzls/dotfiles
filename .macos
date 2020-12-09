@@ -76,7 +76,8 @@ options=("work" "home")
 select location in "${options[@]}"
 do
     case $location in
-        work|home ) echo "installing apps with brew cask for $location"; brew install --cask ${location[@]};;
+        work ) echo "installing apps with brew cask for work"; brew install --cask ${work[@]}; break;;
+        home ) echo "installing apps with brew cask for home"; brew install --cask ${home[@]}; break;;
         * ) echo "Choose one of the valid options.";;
     esac
 done
