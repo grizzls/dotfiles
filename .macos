@@ -4,7 +4,7 @@
 # Modified by Kent C. Dodds
 # And customised by Chris Sowley
 # Run without downloading:
-# curl https://raw.githubusercontent.com/grizzls/dotfiles/master/.macos | bash
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/grizzls/dotfiles/master/.macos)"
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
