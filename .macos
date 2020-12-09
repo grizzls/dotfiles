@@ -95,6 +95,7 @@ brew cleanup
 # Install Oh My Zsh
 echo "installing oh my zsh"
 curl -L http://install.ohmyz.sh | sh
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 # Install PowerLevel10k Theme
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -131,9 +132,9 @@ read -p "Press [Enter] key after this..."
 # Clone other dotfiles
 echo "cloning dotfiles"
 git clone git@github.com:grizzls/dotfiles.git "${HOME}/code/dotfiles"
-ln -s "${HOME}/dotfiles/.p10k.zsh" "${HOME}/.p10k.zsh"
+ln -s "${HOME}/code/dotfiles/.p10k.zsh" "${HOME}/.p10k.zsh"
 cp "${HOME}/.zshrc" "${HOME}/.zshrc-backup"
-ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
+ln -s "${HOME}/code/dotfiles/.zshrc" "${HOME}/.zshrc"
 
 #adding system files to global gitignore
 echo "creating global gitignore"
