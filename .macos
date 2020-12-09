@@ -26,8 +26,8 @@ echo "Hello $(whoami)! Let's get you set up."
 echo "Installing xcode-stuff"
 xcode-select --install
 
-echo "mkdir -p $(HOME)/code"
-mkdir -p "$(HOME)/code"
+echo "mkdir -p ${HOME}/code"
+mkdir -p "${HOME}/code"
 
 # install homebrew https://brew.sh
 echo "installing homebrew"
