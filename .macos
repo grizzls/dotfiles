@@ -25,6 +25,7 @@ echo "Hello $(whoami)! Let's get you set up."
 #install Command Line Tools for Xcode
 echo "Installing xcode-stuff"
 xcode-select --install
+read -p "Press [Enter] key after this..."
 
 echo "mkdir -p ${HOME}/code"
 mkdir -p "${HOME}/code"
@@ -52,6 +53,7 @@ brew install git openssl kubernetes-cli helm pyenv stormssh stormssh-completion 
 home=(
     google-chrome
     visual-studio-code
+    microsoft-office
     1password
     iterm2
     slack
