@@ -30,8 +30,10 @@ echo "mkdir -p ${HOME}/code"
 mkdir -p "${HOME}/code"
 
 # install homebrew https://brew.sh
-echo "installing homebrew"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if test ! $(which brew); then
+    echo "installing homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
 echo "installing brew stuff"
 # git for Git*
