@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+
+# ~/.macos — https://mths.be/macos
+# Modified by Kent C. Dodds
+# And customised by Chris Sowley
+# Run without downloading:
+# curl https://raw.githubusercontent.com/grizzls/dotfiles/master/.macos | bash
+
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+###############################################################################
+# Chris's Customizations                                                      #
+###############################################################################
+
+echo "Hello $(whoami)! Let's get you set up."
+
+#install Command Line Tools for Xcode
+echo "Installing xcode-stuff"
+xcode-select --install
+
+echo "mkdir -p $(HOME)/code"
+mkdir -p "$(HOME)/code"
+
+# install homebrew https://brew.sh
+echo "installing homebrew"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo "installing brew stuff"
+# git for Git*
+# openssl for most everything
+# kubernetes-cli for kubectl
+# helm for Heml Charts
+# pyenv for running python best practices
+# stormssh for easier ssh management
+# speedtest-cli fr internet speed test
+brew install git openssl kubernetes-cli helm pyenv stormssh stormssh-completion speedtest-cli
+
+#cask apps for home
+home=(
+    google-chrome
+    visual-studio-code
+    1password
+    iterm2
+    slack
+    zoomus
+    plex
+)
+
+#cask apps for work
+work=(
+    google-chrome
+    visual-studio-code
+    1password
+    iterm2
+    google-cloud-sdk
+    docker
+    slack
+    postman
+    microsoft-teams
+    microsoft-office
+    macpass
+    zoom
+)
+
+# is this a home or work environment
+echo "what the primary use of this install?"
+options=("work" "home")
+select location in "${options[@]}"
+do
+    case $location in
+        work|home ) echo "installing apps with brew cask for $location"; brew install --cask ${location[@]};;
+        * ) echo "Choose one of the valid options.";;
+    esac
+done
+
+echo "cleaning up brew"
+brew cleanup
+
+# Install Oh My Zsh
+echo "installing oh my zsh"
+curl -L http://install.ohmyz.sh | sh
+
+# Install Powerline fonts
+echo "Installing Powerline fonts..."
+git clone https://github.com/powerline/fonts.git
+cd fonts
+sh -c ./install.sh
+
+# Setting up Python
+echo "Cloning xxenv to pyenv plugins"
+git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/xxenv-latest
+pyenv latest install
+pyenv latest global
+
+# GitHub RSA Key
+echo "Generating an RSA token for GitHub"
+mkdir -p ~/.ssh
+ssh-keygen -t rsa -b 4096
+echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa" | tee ~/.ssh/config
+eval "$(ssh-agent -s)"
+echo "ssh key ~/.ssh/id_rsa.pub' coppied to clipboard now paste that into GitHub"
+echo "https://github.com/account/ssh \n"
+pbcopy < ~/.ssh/id_rsa.pub
+read -p "Press [Enter] key after this..."
+
+# Clone other dotfiles
+echo "cloning dotfiles"
+git clone git@github.com:grizzls/dotfiles.git "${HOME}/dotfiles"
+ln -s "${HOME}/dotfiles/.p10k.zsh" "${HOME}/.p10k.zsh"
+ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
+
+#adding system files to global gitignore
+echo "creating global gitignore"
+touch "${HOME}/.gitignore_global"
+cat >> "${HOME}/.gitignore_global" <<EOL
+.DS_Store
+*.pyc
+
+.vscode/
+EOL
+git config --global core.excludesfile "${HOME}/.gitignore_global"
+
+echo "creating .hushlogin"
+touch "${HOME}/.hushlogin"
+
+###############################################################################
+# System Settings                                                             #
+###############################################################################
+
+# Show Library folder in Finder
+chflags nohidden ~/Library
+
+# Finder: show hidden files by default
+#defaults write com.apple.finder AppleShowAllFiles -bool true
+
+# Finder: show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Keep folders on top when sorting by name
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+###############################################################################
+# All Done                                                                    #
+###############################################################################
+
+echo "Done!"
+printf "TODO for Work:\n\
+install: \n\
+  Cisco AnyConnect \n\
+  Citrix Workspace \n\
+\n\
+Restart Terminal.app\n\
+copy iTerm config from your backup \n\
+copy VSCode config from your backup \n\
+copy ssh config from your backup \n\
+copy kube config from your backup \n\
+login to literally everything \n\
+"
