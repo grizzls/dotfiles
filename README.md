@@ -51,16 +51,27 @@ All of the following are commands that you can enter directly into Terminal or l
 Install the following terminal tools:
 
 [Homebrew](https://brew.sh/)
+
 [oh-my-zsh](https://ohmyz.sh/)
+
 [Git](https://git-scm.com/)
+
 [Powerline fonts](https://github.com/powerline/fonts)
+
 [Speedtest-cli](https://github.com/sivel/speedtest-cli)
+
 [openssl](https://www.openssl.org/)
+
 [kubernetes-cli](https://kubernetes.io/)
+
 [helm](https://helm.sh/)
+
 [pyenv](https://github.com/pyenv/pyenv)
+
 [xxenv-latest](https://github.com/momo-lab/xxenv-latest)
+
 [stormssh](https://github.com/emre/storm)
+
 [stormssh-completion](https://github.com/vigo/stormssh-completion)
 
 ### Additional Applications

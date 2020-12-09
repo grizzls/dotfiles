@@ -113,7 +113,7 @@ read -p "Press [Enter] key after this..."
 
 # Clone other dotfiles
 echo "cloning dotfiles"
-git clone git@github.com:grizzls/dotfiles.git "${HOME}/dotfiles"
+git clone git@github.com:grizzls/dotfiles.git "${HOME}/code/dotfiles"
 ln -s "${HOME}/dotfiles/.p10k.zsh" "${HOME}/.p10k.zsh"
 ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
 
