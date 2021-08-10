@@ -45,9 +45,8 @@ echo "installing brew stuff"
 # kubernetes-cli for kubectl
 # helm for Heml Charts
 # pyenv for running python best practices
-# stormssh for easier ssh management
 # speedtest-cli fr internet speed test
-brew install git openssl kubernetes-cli helm pyenv stormssh stormssh-completion speedtest-cli
+brew install git openssl kubernetes-cli helm pyenv speedtest-cli
 
 #cask apps for home
 home=(
@@ -57,6 +56,8 @@ home=(
     1password
     iterm2
     slack
+    signal
+    docker
     plex
 )
 
@@ -69,6 +70,7 @@ work=(
     google-cloud-sdk
     docker
     slack
+    signal
     postman
     microsoft-teams
     microsoft-office
@@ -77,7 +79,7 @@ work=(
 )
 
 # is this a home or work environment
-echo "what the primary use of this install?"
+echo "whats the primary use of this install?"
 options=("work" "home")
 select location in "${options[@]}"
 do
@@ -95,21 +97,18 @@ brew cleanup
 echo "installing oh my zsh"
 curl -L http://install.ohmyz.sh | sh
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 # Install PowerLevel10k Theme
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
+
+# Install Powerline fonts
 echo "Download the following fonts:"
 echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf"
 echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf"
 echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf"
 echo "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf"
 read -p "Press [Enter] key after this..."
-
-# Install Powerline fonts
-echo "Installing Powerline fonts..."
-git clone https://github.com/powerline/fonts.git
-cd fonts
-sh -c ./install.sh
 
 # Setting up Python
 echo "Cloning xxenv to pyenv plugins"
