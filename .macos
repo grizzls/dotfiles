@@ -133,6 +133,7 @@ git clone git@github.com:grizzls/dotfiles.git "${HOME}/code/dotfiles"
 ln -s "${HOME}/code/dotfiles/.p10k.zsh" "${HOME}/.p10k.zsh"
 cp "${HOME}/.zshrc" "${HOME}/.zshrc-backup"
 ln -s "${HOME}/code/dotfiles/.zshrc" "${HOME}/.zshrc"
+ln -s "${HOME}/code/dotfiles/.zprofile" "${HOME}/.zprofile"
 
 #adding system files to global gitignore
 echo "creating global gitignore"
