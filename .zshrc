@@ -107,8 +107,13 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Pyenv stuff
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
+fi
+if which pyenv-virtualenv-init > /dev/null; then 
+  eval "$(pyenv virtualenv-init -)"; 
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
