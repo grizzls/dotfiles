@@ -40,41 +40,53 @@ brew doctor
 brew cask doctor
 
 echo "installing brew stuff"
-# git for Git*
-# openssl for most everything
-# kubernetes-cli for kubectl
-# helm for Heml Charts
-# pyenv for running python best practices
-# speedtest-cli fr internet speed test
-brew install git openssl kubernetes-cli helm pyenv speedtest-cli
 
-#cask apps for home
+#apps for home
 home=(
-    google-chrome
-    visual-studio-code
-    microsoft-office
-    1password
-    iterm2
-    slack
-    signal
-    docker
-    plex
+    git 
+    openssl 
+    pyenv 
+    pyenv-virtualenv 
+    speedtest-cli 
 )
 
-#cask apps for work
-work=(
-    google-chrome
-    visual-studio-code
+home-cask=(
     1password
-    iterm2
-    google-cloud-sdk
     docker
-    slack
+    google-chrome
+    iterm2
+    plex
     signal
+    slack
+    visual-studio-code
+)
+
+#apps for work
+work=(
+    git
+    helm 
+    kubectx 
+    kubernetes-cli 
+    openssl 
+    pyenv 
+    pyenv-virtualenv 
+    speedtest-cli 
+    sqlite 
+    tfenv 
+    trivy 
+    vault
+)
+
+work-cask=(
+    1password
+    docker
+    google-chrome
+    google-cloud-sdk
+    iterm2
     postman
-    microsoft-teams
-    microsoft-office
-    macpass
+    signal
+    slack
+    visual-studio-code
     zoom
 )
 
@@ -84,8 +96,8 @@ options=("work" "home")
 select location in "${options[@]}"
 do
     case $location in
-        work ) echo "installing apps with brew cask for work"; brew install --cask ${work[@]}; break;;
-        home ) echo "installing apps with brew cask for home"; brew install --cask ${home[@]}; break;;
+        work ) echo "installing apps with brew cask for work"; brew install ${work[@]}; brew install --cask ${work-cask[@]}; break;;
+        home ) echo "installing apps with brew cask for home"; brew install ${home[@]}; brew install --cask ${home-cask[@]}; break;;
         * ) echo "Choose one of the valid options.";;
     esac
 done
@@ -170,15 +182,9 @@ defaults write com.apple.finder _FXSortFoldersFirst -bool true
 ###############################################################################
 
 echo "Done!"
-printf "TODO for Work:\n\
-install: \n\
-  Cisco AnyConnect \n\
-  Citrix Workspace \n\
-\n\
+printf "
 Restart Terminal.app\n\
 copy iTerm config from your backup \n\
-copy VSCode config from your backup \n\
-copy ssh config from your backup \n\
 copy kube config from your backup \n\
 login to literally everything \n\
 "
