@@ -90,6 +90,25 @@ work-cask=(
     zoom
 )
 
+#apps for media-server
+media=(
+    git 
+    openssl 
+    pyenv 
+    pyenv-virtualenv 
+)
+
+media-cask=(
+    docker
+    google-chrome
+    iterm2
+    plex-media-server
+    sabnzbd
+    radarr
+    sonarr
+    dotnet-sdk
+)
+
 # is this a home or work environment
 echo "whats the primary use of this install?"
 options=("work" "home")
@@ -98,6 +117,7 @@ do
     case $location in
         work ) echo "installing apps with brew cask for work"; brew install ${work[@]}; brew install --cask ${work-cask[@]}; break;;
         home ) echo "installing apps with brew cask for home"; brew install ${home[@]}; brew install --cask ${home-cask[@]}; break;;
+        media-server ) echo "installing apps with brew cask for media-server"; brew install ${media[@]}; brew install --cask ${media-cask[@]}; break;;
         * ) echo "Choose one of the valid options.";;
     esac
 done
