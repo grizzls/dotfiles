@@ -110,7 +110,7 @@ mediacask=(
 
 # is this a home or work environment
 echo "whats the primary use of this install?"
-options=("work" "home")
+options=("work" "home" "media")
 select location in "${options[@]}"
 do
     case $location in
