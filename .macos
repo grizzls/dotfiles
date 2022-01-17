@@ -49,7 +49,7 @@ home=(
     speedtest-cli 
 )
 
-home-cask=(
+homecask=(
     1password
     docker
     google-chrome
@@ -76,7 +76,7 @@ work=(
     vault
 )
 
-work-cask=(
+workcask=(
     1password
     docker
     google-chrome
@@ -97,7 +97,7 @@ media=(
     pyenv-virtualenv 
 )
 
-media-cask=(
+mediacask=(
     docker
     google-chrome
     iterm2
@@ -114,9 +114,9 @@ options=("work" "home")
 select location in "${options[@]}"
 do
     case $location in
-        work ) echo "installing apps with brew cask for work"; brew install ${work[@]}; brew install --cask ${work-cask[@]}; break;;
-        home ) echo "installing apps with brew cask for home"; brew install ${home[@]}; brew install --cask ${home-cask[@]}; break;;
-        media-server ) echo "installing apps with brew cask for media-server"; brew install ${media[@]}; brew install --cask ${media-cask[@]}; break;;
+        work ) echo "installing apps with brew cask for work"; brew install ${work[@]}; brew install --cask ${workcask[@]}; break;;
+        home ) echo "installing apps with brew cask for home"; brew install ${home[@]}; brew install --cask ${homecask[@]}; break;;
+        media ) echo "installing apps with brew cask for media-server"; brew install ${media[@]}; brew install --cask ${mediacask[@]}; break;;
         * ) echo "Choose one of the valid options.";;
     esac
 done
