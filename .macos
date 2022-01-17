@@ -98,7 +98,6 @@ media=(
 )
 
 mediacask=(
-    docker
     google-chrome
     iterm2
     plex-media-server
