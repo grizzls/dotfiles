@@ -104,6 +104,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias tf="terraform"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -128,7 +129,3 @@ complete -F __start_kubectl k
 
 # griphook env stuff
 if [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
-
-# Aliases
-alias la="ls -la"
-alias tf="terraform"
