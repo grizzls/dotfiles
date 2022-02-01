@@ -122,7 +122,9 @@ if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.i
 # The next line enables shell command completion for gcloud.
 if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi
 
+# Kubernetes aliase
 alias k=kubectl
 complete -F __start_kubectl k
 
+# griphook env stuff
 fi [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
