@@ -127,4 +127,8 @@ alias k=kubectl
 complete -F __start_kubectl k
 
 # griphook env stuff
-fi [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
+if [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
+
+# Aliases
+alias la="ls -la"
+alias tf="terraform"
