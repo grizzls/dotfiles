@@ -124,3 +124,5 @@ if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion
 
 alias k=kubectl
 complete -F __start_kubectl k
+
+fi [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
