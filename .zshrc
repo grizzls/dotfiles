@@ -129,3 +129,6 @@ complete -F __start_kubectl k
 
 # griphook env stuff
 if [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
+
+# gcloud auth plugin for gke
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
