@@ -104,7 +104,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias tf="terraform"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -123,12 +122,12 @@ if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.i
 # The next line enables shell command completion for gcloud.
 if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi
 
-# Kubernetes aliase
-alias k=kubectl
-complete -F __start_kubectl k
-
 # griphook env stuff
 if [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
 
-# gcloud auth plugin for gke
+# gcloud stuff
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+#alias beatlantis="export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-token --impersonate-service-account=atlantis@eng-infrastructure.iam.gserviceaccount.com)"
+
+# Kubectl autocompletion
+source <(kubectl completion zsh)
