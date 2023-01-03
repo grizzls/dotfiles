@@ -75,7 +75,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages colorize pip python brew macos zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git colored-man-pages colorize brew pip python macos zsh-syntax-highlighting zsh-autosuggestions)
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
@@ -110,10 +110,12 @@ source $ZSH/oh-my-zsh.sh
 
 # Pyenv stuff
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+  # export PYENV_ROOT="$HOME/.pyenv"
+  # export PATH="$PYENV_ROOT/shims:$PATH"
+  eval "$(pyenv init - --no-rehash)"
 fi
 if which pyenv-virtualenv-init > /dev/null; then 
-  eval "$(pyenv virtualenv-init -)"; 
+  eval "$(pyenv virtualenv-init - --no-rehash)"; 
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -123,11 +125,14 @@ if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.i
 if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi
 
 # griphook env stuff
-if [ -f '~/.griphook/env' ]; then source '~/.griphook/env'; fi 
+if [ -f '.griphook/env' ]; then source '.griphook/env'; fi
+export GITHUB_TOKEN=$GITHUB_TOKEN 
 
 # gcloud stuff
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-#alias beatlantis="export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-token --impersonate-service-account=atlantis@eng-infrastructure.iam.gserviceaccount.com)"
+alias beatlantis='export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-token --impersonate-service-account=atlantis@eng-infrastructure.iam.gserviceaccount.com)'
 
 # Kubectl autocompletion
 source <(kubectl completion zsh)
+
+source "$HOME/.config/netskope/env.sh"
