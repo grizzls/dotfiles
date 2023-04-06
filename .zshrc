@@ -126,7 +126,7 @@ if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion
 
 # griphook env stuff
 if [ -f '.griphook/env' ]; then source '.griphook/env'; fi
-export GITHUB_TOKEN=$GITHUB_TOKEN 
+export GITHUB_NPM_TOKEN=$(<$HOME/.griphook/github.pat)
 
 # gcloud stuff
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
@@ -134,5 +134,10 @@ alias beatlantis='export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-to
 
 # Kubectl autocompletion
 source <(kubectl completion zsh)
+
+#nvm stuff
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 source "$HOME/.config/netskope/env.sh"
