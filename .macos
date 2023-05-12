@@ -79,14 +79,10 @@ work=(
 workcask=(
     1password
     docker
-    google-chrome
     google-cloud-sdk
     iterm2
     postman
-    signal
-    slack
     visual-studio-code
-    zoom
 )
 
 #apps for media-server
