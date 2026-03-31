@@ -110,34 +110,96 @@ source $ZSH/oh-my-zsh.sh
 
 # Pyenv stuff
 if command -v pyenv 1>/dev/null 2>&1; then
-  # export PYENV_ROOT="$HOME/.pyenv"
-  # export PATH="$PYENV_ROOT/shims:$PATH"
-  eval "$(pyenv init - --no-rehash)"
+  export PYENV_ROOT="$HOME/.pyenv"
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
 fi
 if which pyenv-virtualenv-init > /dev/null; then 
   eval "$(pyenv virtualenv-init - --no-rehash)"; 
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc" ]; then 
+  source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc" 
+fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc" ]; then 
+  source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc" 
+fi
 
 # griphook env stuff
-if [ -f '.griphook/env' ]; then source '.griphook/env'; fi
-export GITHUB_NPM_TOKEN=$(<$HOME/.griphook/github.pat)
+if [ -f ".griphook/env" ]; then 
+  source ".griphook/env";
+  export GITHUB_NPM_TOKEN=$(<$HOME/.griphook/github.pat) 
+fi
 
 # gcloud stuff
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-alias beatlantis='export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-token --impersonate-service-account=atlantis@eng-infrastructure.iam.gserviceaccount.com)'
+export CLOUDSDK_PYTHON=$(which python)
+function beatlantis() {
+  export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-token --impersonate-service-account=atlantis@eng-infrastructure.iam.gserviceaccount.com)
+}
 
 # Kubectl autocompletion
 source <(kubectl completion zsh)
 
 #nvm stuff
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+  [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-source "$HOME/.config/netskope/env.sh"
+if [ -f "$HOME/.config/netskope/env.sh" ]; then
+  source "$HOME/.config/netskope/env.sh"
+fi
+
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+
+function certifi-fix() {
+  cat $HOME/.config/netskope/nscacert_combined.pem > "$(python -c 'import certifi; print(certifi.where())')"
+}
+
+# JWT decoding function - supports both argument and pipe input
+function jwt-decode() {
+    local jwt
+    
+    # Check if jq is installed
+    if ! command -v jq &> /dev/null; then
+        echo "Error: jq is not installed. Install it with: brew install jq"
+        return 1
+    fi
+    
+    # Check if input is from pipe/stdin or argument
+    if [ -p /dev/stdin ]; then
+        # Input from pipe
+        jwt=$(cat)
+    elif [ -n "$1" ]; then
+        # Input from argument
+        jwt="$1"
+    else
+        echo "Usage: jwt-decode <JWT_TOKEN>"
+        echo "       echo \$JWT | jwt-decode"
+        echo "       pbpaste | jwt-decode"
+        return 1
+    fi
+    
+    # Decode the JWT using jq
+    echo "$jwt" | jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' 2>/dev/null
+    
+    if [ $? -ne 0 ]; then
+        echo "Error: Invalid JWT token"
+        return 1
+    fi
+}
+
+alias jwtd='jwt-decode'
+
+#gemini cli stuff
+export GOOGLE_GENAI_USE_VERTEXAI=true                                                                                                                                                           
+export GOOGLE_CLOUD_PROJECT=vertexai-sandbox-e8a925d0
+export GOOGLE_CLOUD_LOCATION=us-central1
+
+. "$HOME/.local/bin/env"
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+eval "$(direnv hook zsh)"
