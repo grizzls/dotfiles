@@ -137,9 +137,6 @@ fi
 # gcloud stuff
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 export CLOUDSDK_PYTHON=$(which python)
-function beatlantis() {
-  export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-token --impersonate-service-account=atlantis@eng-infrastructure.iam.gserviceaccount.com)
-}
 
 # Kubectl autocompletion
 source <(kubectl completion zsh)
